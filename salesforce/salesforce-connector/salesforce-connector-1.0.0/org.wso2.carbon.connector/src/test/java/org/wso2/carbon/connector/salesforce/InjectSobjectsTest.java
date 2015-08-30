@@ -72,7 +72,7 @@ public class InjectSobjectsTest extends TestCase {
 		Collection<String> collection = new java.util.ArrayList<String>();
 		collection.add(strParamName);
 		testCtx.setProperty(TEST_TEMPLATE + ":" + strParamName, 
-					new Value("<sfdc:sObjects xmlns:sfdc='sfdc' type='Account'><sfdc:sObject><sfdc:Name>name01</sfdc:Name></sfdc:sObject></sfdc:sObjects>"));
+					new Value("<sfdc:sObjects xmlns:sfdc='sfdc' type='Account'><sfdc:sObject><sfdc:Name>name01</sfdc:Name><sfdc:Contact><sfdc:Id></sfdc:Id></sfdc:Contact></sfdc:sObject></sfdc:sObjects>"));
 		TemplateContext context = new TemplateContext(TEST_TEMPLATE, collection);
 		Stack<TemplateContext> stack = new Stack<TemplateContext>();
 		stack.add(context);				

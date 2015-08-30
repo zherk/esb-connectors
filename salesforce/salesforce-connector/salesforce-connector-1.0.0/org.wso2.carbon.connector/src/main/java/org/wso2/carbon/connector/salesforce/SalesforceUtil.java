@@ -75,6 +75,7 @@ public final class SalesforceUtil {
 				                 sObjects.getAttributeValue(new QName(
 				                                                      SalesforceUtil.SALESFORCE_CREATE_SOBJECTTYPE));
 				OMElement tmpElement = null;
+				OMElement tmpElement1 = null;
 				OMNamespace omNsurn = fac.createOMNamespace("urn:partner.soap.sforce.com", "urn");
 				OMNamespace omNsurn1 =
 				                       fac.createOMNamespace("urn:sobject.partner.soap.sforce.com",
@@ -94,11 +95,23 @@ public final class SalesforceUtil {
 					while (sObjectFields.hasNext()) {
 						OMElement sObjectField = sObjectFields.next();
 						tmpElement = fac.createOMElement(sObjectField.getLocalName(), omNsurn1);
-						tmpElement.addChild(fac.createOMText(sObjectField.getText()));
+						Iterator<OMElement> sObjectFields1 = sObjectField.getChildElements();						
+						if (sObjectFields1.hasNext()) {					
+							while (sObjectFields1.hasNext()) {
+								OMElement sObjectField1 = sObjectFields1.next();
+								tmpElement1 = fac.createOMElement(sObjectField1.getLocalName(), omNsurn1);
+								tmpElement1.addChild(fac.createOMText(sObjectField1.getText()));
+								tmpElement1.addChild(tmpElement1);
+								tmpElement.addChild(tmpElement1);
+							}
+						} else {
+							tmpElement.addChild(fac.createOMText(sObjectField.getText()));
+						}
 						newElement.addChild(tmpElement);
 					}
 
 					bodyElement.addChild(newElement);
+					bodyElement.toString();
 				}
 			} catch (Exception e) {
 				synLog.error("Saleforce adaptor - error injecting sObjects to payload : " + e);
